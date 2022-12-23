@@ -1,0 +1,46 @@
+class Solution:
+    def transitiveClosure(self, n, graph):
+        m=[]
+        for i in range(n):
+            m.append([0]*n)
+        for i in range(0,n):
+            for j in range(0,n):
+                flag=0
+                if i==j:
+                    m[i][j]=1
+                else:
+                    flag=DFS(i,j,graph,[],flag,n)
+                    m[i][j]=flag
+        return m
+def DFS(s,d,graph,visited,flag,n):
+    visited.append(s)
+    for i in range(0,n):
+        if i not in visited:
+            if graph[s][i]==1:
+                if i==d:
+                    flag=1
+                    return flag
+                else:
+                    flag=DFS(i,d,graph,visited,flag,n)
+    return flag           
+        
+
+
+#{ 
+ # Driver Code Starts
+#Initial Template for Python 3
+
+if __name__ == '__main__':
+    t = int(input())
+    for _ in range(t):
+        N = int(input())
+        graph = []
+        for i in range(0,N):
+            graph.append([int(j) for j in input().split()])
+        ob = Solution()
+        ans = ob.transitiveClosure(N, graph)
+        for i in range(N):
+            for j in range(N):
+                print(ans[i][j], end = " ")
+            print()
+# } Driver Code Ends
